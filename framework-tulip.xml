@@ -49,7 +49,7 @@
     <project path="src/third_party/zephyr/main"
         name="zephyr"
         remote="framework"
-        revision="refs/heads/fwk-mail"
+        revision="refs/heads/fwk-main"
         groups="firmware,zephyr" />
 
     <project path="src/third_party/zephyr/cmsis"
