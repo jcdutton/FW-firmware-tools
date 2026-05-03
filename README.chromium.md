@@ -29,7 +29,7 @@ cd chromium
 
 ```bash
 # It's this gist! As a repo!
-repo init -u https://github.com/jcdutton/FW-firmwware-tools.git -m framework.xml
+repo init -u https://github.com/jcdutton/FW-firmwware-tools.git -m framework-tulip-jcd1.xml
 repo sync
 ```
 
@@ -54,6 +54,8 @@ If you're not using Debian, or Debian has changed since this guide was written, 
 sed -e 's/>=61.0/==68.2.2/' -i src/third_party/u-boot/files/tools/binman/pyproject.toml
 # Install everything
 pip install pyyaml pykwalify packaging pyelftools colorama src/platform/ec/zephyr/zmake binary-manager setuptools
+# To fix error: ModuleNotFoundError: No module named 'pkg_resources'
+python -m pip install --upgrade "setuptools<=80.10.2"
 ```
 
 ## Prepare the Zephyr SDK
@@ -61,9 +63,9 @@ pip install pyyaml pykwalify packaging pyelftools colorama src/platform/ec/zephy
 I just followed the path of least resistance and installed it in `/opt` like it says.
 
 ```
-wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/zephyr-sdk-0.16.5-1_linux-x86_64.tar.xz
-tar -x -f zephyr-sdk-0.16.5-1_linux-x86_64.tar.xz -C /opt
-/opt/zephyr-sdk-0.16.5-1/setup.sh
+wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v1.0.1/zephyr-sdk-1.0.1_linux-x86_64_gnu.tar.xz
+tar -x -f zephyr-sdk-1.0.1_linux-x86_64_gnu.tar.xz -C /opt
+/opt/zephyr-sdk-1.0.1/setup.sh
 ```
 
 Answer the questions!
@@ -77,9 +79,9 @@ zmake -j8 build azalea
 It will show up in (breathe) `src/platform/ec/build/zephyr/azalea/out/ec.bin`
 ```
 
-If you have a FW13 AMD Ryzen 7840HS: The firmware to build is "lotus"
+If you have a FW16 AMD Ryzen 7840HS: The firmware to build is "lotus"
 ```bash
-zmake -j8 build lotus
+zmake -j16 build -v 4.0.4 lotus
 It will show up in (breathe) `src/platform/ec/build/zephyr/lotus/out/ec.bin`
 ```
 
@@ -94,7 +96,7 @@ In the future, just...
 
 zmake -j8 build azalea
 or
-zmake -j8 build lotus
+zmake -j16 build -v 4.0.4 lotus
 
 ```
 
